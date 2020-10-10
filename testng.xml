@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <!--浏览器参数-->
+    <!--    <parameter name="browserType" value="Chrome"/>-->
+    <test verbose="2" preserve-order="true" name="D:/易观/java project">
+        <classes>
+            <class name="com.qa.testcase.UbaTester"></class>
+        </classes>
+    </test>
+</suite>
