@@ -73,26 +73,9 @@ public class ExcelUtil {
                     cell.setCellType(CellType.STRING);
                     String cellValue = cell.getStringCellValue();
 
-                    //当i等于startRow，j等于startCell--》datas[0][0]
-                    //当i等于startRow，j等于startCell+1 --》datas[0][1]
-
                     datas[i - startRow][j - startCell] = cellValue;
 
-                    //从1000取到1002行，从101列取到110列 --》3行10列
-                    //第2行到第7行  第1列到第4列  --》6行4列
-                    //第1行：
-                    //	第1列：data[0][0] = ?
-                    //	第2列：data[0][1]
-                    //	第3列：data[0][2]
-                    //	第4列：data[0][3]
-                    //第2行：
-                    //	第1列：data[1][0] = ?
-                    //	第2列：data[1][1]
-                    //	第3列：data[1][2]
-                    //	第4列：data[1][3]
-                    //	System.out.print("["+cellValue+"] - ");
                 }
-                //System.out.println();
             }
 
         } catch (Exception e) {
@@ -407,19 +390,7 @@ public class ExcelUtil {
     }
 
     public static void main(String[] args) {
-		/*Object[][] datas = readExcelWithRowNum("/rest_info.xlsx", 1, 2, 12, 1, 1);
-		for (Object[] objects : datas) {
-			for (Object object : objects) {
-				System.out.print("[" + object + "] - ");
-			}
-			System.out.println();
-		}*/
-
-        //		readExcelAllData("/register.xlsx", 0);
-
-        //		writeExcel("/rest_info.xlsx", 1, "1", 5, "2");
-
-        read("/rest_info.xlsx", 0, ApiInfo.class);
+        read("/api_test_info.xlsx", 0, ApiInfo.class);
     }
 
 }

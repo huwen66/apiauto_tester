@@ -7,7 +7,6 @@ import com.qa.pojo.CellData;
 import com.qa.util.ApiUtil;
 import com.qa.util.AssertUtil;
 import com.qa.util.ExcelUtil;
-import org.apache.http.message.BasicNameValuePair;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.qa.util.HttpUtil;
@@ -33,12 +32,7 @@ public class UbaTester extends BaseTester {
         System.out.println("-------------" + caseId + "--------" + result);
         //回写响应结果到excel
         ExcelUtil.dataToWriteList.add(new CellData(caseId, 5, result));
-        //断言响应结果
-//        if (AssertUtil.assertResponse(result,expectedReponseData) == true)
-//        {
-//            ExcelUtil.dataToWriteList.add(new CellData(caseId, 6, "成功"));
-//        }else
-//            ExcelUtil.dataToWriteList.add(new CellData(caseId, 6, "失败"));
+        AssertUtil.assertResponse(result,expectedReponseData);
     }
 
     @DataProvider
