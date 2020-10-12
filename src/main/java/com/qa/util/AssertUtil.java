@@ -3,6 +3,7 @@ package com.qa.util;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
+import com.qa.pojo.CellData;
 import com.qa.pojo.JsonPathValidate;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -47,6 +48,7 @@ public class AssertUtil {
             logger.info("----------------全匹配模式断言----------------");
             flag = actual.equals(expected);
         }
+
         System.out.println("--------" + flag + "----------");
         Assert.assertTrue(flag, "断言失败");
         return flag;

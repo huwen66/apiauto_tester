@@ -59,7 +59,6 @@ public class JDBCUtil {
     private static Connection getConnection() {
         Connection conn = null;
         try {
-            //2：获得一个数据库连接
             conn = DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,7 +78,7 @@ public class JDBCUtil {
     public static void excute(String sql, Object... params) {
         //得到一个连接
         Connection conn = null;
-        //4:预编译的陈述对象(防止sql注入)
+        //预编译的陈述对象(防止sql注入)
         PreparedStatement pstmt = null;
         try {
             conn = getConnection();
@@ -92,8 +91,7 @@ public class JDBCUtil {
                 //占位符参数的设置
                 pstmt.setObject(i + 1, paramObj);
             }
-
-            //5：语句的执行
+            //执行语句
             pstmt.execute();
 
         } catch (SQLException e) {
@@ -109,8 +107,6 @@ public class JDBCUtil {
      * @param sql
      * @param params
      * @return
-     * @throws ClassNotFoundException
-     * @throws SQLException
      */
     public static List<Map<String, String>> query(String sql, Object... params) {
 
@@ -124,7 +120,7 @@ public class JDBCUtil {
         try {
             //得到一个连接
             conn = getConnection();
-            //4:陈述对象
+            //陈述对象
             pstmt = conn.prepareStatement(sql);
             //参数占位符的功能
             int length = params.length;
@@ -135,15 +131,11 @@ public class JDBCUtil {
                 pstmt.setObject(i + 1, paramObj);
             }
 
-            //5：语句的执行:得到结果集
+            //语句的执行:得到结果集
             resultSet = pstmt.executeQuery(sql);
             //结果记录数、记录的字段数是不确定的
 
             //把从数据库查询出来的记录保存到一个list中间
-            /**
-             * （重点！！！！！！）
-             * 一个excel中一行 = 数据库中的一行 = 一个java自定义类对象 = hashMap = json字典  = xml
-             */
             recordsList = new ArrayList<Map<String, String>>();
 
             //获得结果集的元数据
@@ -151,12 +143,11 @@ public class JDBCUtil {
             //列数
             int columnCount = metaData.getColumnCount();
 
-            //当我们的结果集中间还有下一条记录时
+            //当结果集中间还有下一条记录时
             while (resultSet.next()) {
                 //方法：每条记录封装到一个map去
                 Map<String, String> recordMap = new HashMap<String, String>();
                 //recordMap.put(列名, 对应的值);
-                //字段数不确定，是不是有方法能够拿到字段数
                 for (int i = 1; i <= columnCount; i++) {
                     //从元数据得到列名(性能问题，可以放到外面去一次性把字段名收集起来)
                     String columnName = metaData.getColumnName(i);
@@ -168,7 +159,7 @@ public class JDBCUtil {
                 //添加当前记录到list
                 recordsList.add(recordMap);
             }
-            //6：资源的关闭
+            //资源的关闭
             pstmt.close();
             conn.close();
             resultSet.close();
@@ -178,7 +169,6 @@ public class JDBCUtil {
             //资源的释放和关闭
             close(conn, pstmt, resultSet);
         }
-
         return recordsList;
     }
 
@@ -207,7 +197,7 @@ public class JDBCUtil {
      * @param pstmt 陈述对象
      */
     private static void close(Connection conn, PreparedStatement pstmt) {
-        //6：资源的关闭
+        //资源的关闭
         if (pstmt != null) {
             try {
                 pstmt.close();

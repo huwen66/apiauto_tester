@@ -5,7 +5,15 @@
     <!--    <parameter name="browserType" value="Chrome"/>-->
     <test verbose="2" preserve-order="true" name="D:/易观/java project">
         <classes>
-            <class name="com.qa.testcase.UbaTester"></class>
+            <class name="com.qa.testcase.UbaTester">
+            <methods>
+                <include name="test_001"/>
+            </methods>
+            </class>
         </classes>
     </test>
+
+    <listeners>
+        <listener class-name="com.qa.listener.ExtentTestNGIReporterListener"/>
+    </listeners>
 </suite>

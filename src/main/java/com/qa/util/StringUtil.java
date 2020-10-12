@@ -9,17 +9,6 @@ public class StringUtil {
      * @return
      */
     public static boolean isEmpty(String str) {
-        /**
-         * null
-         * 空字符串--》""
-         * 空格字符串 -->"    "
-         */
-        //以下的情况都是空字符串
-        //		boolean flag1 = (str == null);
-        //		boolean flag2 = (str == "");
-        //		boolean flag3 = (str.replace(" ", "") == "");
-        //		return flag1 || flag2 || flag3;
-
         return ((str == null) || ("".equals(str.replace(" ", ""))));
     }
 
@@ -28,8 +17,6 @@ public class StringUtil {
         System.out.println(isEmpty(""));
         System.out.println(isEmpty("    "));
         System.out.println(isEmpty(" hello    "));
-
-//		System.out.println("    ".replace(" ", "") .equals(""));
     }
 
 }
