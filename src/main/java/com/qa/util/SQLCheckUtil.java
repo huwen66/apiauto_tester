@@ -13,9 +13,9 @@ public class SQLCheckUtil {
     public static String getSQLCheckResult(String validateSql) {
         //验证这条sql--》解析出单条sql（把no，sql，expectedResult提取出来，解析出来） --》类-->SQLChecker
         List<SQLChecker> sqlCheckerList = JSONObject.parseArray(validateSql, SQLChecker.class);
-
+        CheckResult checkResult;
         //一个测试用例sql验证多条sql对应有多个结果--》容器中间--》list
-        List<CheckResult> checkResultList = new ArrayList<CheckResult>();
+        List<CheckResult> checkResultList = new ArrayList<>();
 
         for (SQLChecker sqlChecker : sqlCheckerList) {
             //实际的结果
@@ -25,7 +25,6 @@ public class SQLCheckUtil {
             List<Map<String, String>> expectedResultList = sqlChecker.getExpectedResultList();
             String expectedResultStr = JSONObject.toJSONString(expectedResultList);
 
-            CheckResult checkResult = null;
             if (actualResultStr.equals(expectedResultStr)) {
                 checkResult = new CheckResult(sqlChecker.getNo(), actualResultList, "成功");
             } else {

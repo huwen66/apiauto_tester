@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
-    <!--浏览器参数-->
+<suite name="All Test Suite" parallel="tests" thread-count="1">
+<!--<suite name="All Test Suite">-->
     <!--    <parameter name="browserType" value="Chrome"/>-->
-    <test verbose="2" preserve-order="true" name="D:/易观/java project">
+    <test verbose="2" preserve-order="false" name="analysys-api">
         <classes>
-            <class name="com.qa.testcase.UbaTester">
-            <methods>
-                <include name="test_001"/>
-            </methods>
+            <class name="com.qa.testcase.TestCase">
+<!--                <methods>-->
+<!--                    <include name="test_002"/>-->
+<!--                </methods>-->
             </class>
         </classes>
     </test>
 
     <listeners>
         <listener class-name="com.qa.listener.ExtentTestNGIReporterListener"/>
+        <listener class-name="com.qa.listener.TestNGLogListener"/>
+        <listener class-name="com.qa.listener.RetryListener"/>
+        <listener class-name="com.qa.listener.ResultListener"/>
+        <!--        <listener class-name="com.qa.listener.MyExtentTestNgFormatter"/>-->
     </listeners>
 </suite>

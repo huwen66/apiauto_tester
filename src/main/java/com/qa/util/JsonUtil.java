@@ -1,67 +1,68 @@
 package com.qa.util;
 
+/**
+ * @ClassName JSONUtil
+ * @author: vinson.hu
+ * @Description TODO
+ * @date 2021/4/27 11:31
+ * @Version 1.0版本
+ */
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.PropertyFilter;
 
-public class JsonUtil {
+public class JSONUtil {
 
-    public static Object getValue(String text, String key) {
+    /**
+     * 根据key获取字符串的value
+     *
+     * @param text 指定字符串
+     * @param key  键
+     * @return
+     */
+    public static String getValue(String text, String key) {
         JSONObject o = JSONObject.parseObject(text);
-        Object value = o.get(key);
-        System.out.println(value);
-        return "";
+        String value = o.get(key) == null ? "" : o.get(key).toString();
+        return value;
     }
 
-    public static String getColumns(String json, String... cols) {
+    /**
+     * 过滤指定字段
+     *
+     * @param json json对象
+     * @param arr  过滤的字段
+     */
+    public static Object jsonFilter(Object json, String... arr) {
 
-        int len = cols.length;
-        JSONObject jsonObject;
-        String[][] keyWord = new String[len][];
-        for (int i = 0; i < len; i++) {
-            keyWord[i] = cols[i].split("\\.");
-        }
-        StringBuffer colVal = new StringBuffer();
-        for (int i = 0; i < len; i++) {
-            jsonObject = JSON.parseObject(json);
-            for (int j = 0; j < keyWord[i].length - 1; j++) {
-                jsonObject = (JSONObject) jsonObject.get(keyWord[i][j]);
+        PropertyFilter propertyFilter = new PropertyFilter() {
+            @Override
+            public boolean apply(Object object, String name, Object value) {
+                for (String string : arr) {
+                    if (name.equalsIgnoreCase(string)) {
+                        return false;// 过滤掉
+                    }
+                }
+                return true;// 不过滤
             }
-            if (colVal.toString().length() < 1) {
-                colVal.append(jsonObject.get(keyWord[i][keyWord[i].length - 1]).toString());
-            } else {
-                colVal.append("," + jsonObject.get(keyWord[i][keyWord[i].length - 1]).toString());
-            }
-            jsonObject = null;
-        }
-        return colVal.toString();
+        };
+        json = JSON.toJSONString(json, propertyFilter);
+        return json;
     }
 
-    public static String get(String json, String... cols) {
-        int len = cols.length;
-        String[][] keyWord = new String[len][];
-        for (int i = 0; i < len; i++) {
-            keyWord[i] = cols[i].split("\\.");
-        }
-        if (json.substring(0, 1).equals("[")) {
-            JSONArray jsonObject = JSONArray.parseArray(json);
-            for (int i = 0; i < jsonObject.size(); i++) {
-                JSONObject ob = jsonObject.getJSONObject(i);
-                ob.get("");
-            }
-            System.out.println(jsonObject);
-        }
-        return "";
-    }
 
     public static void main(String[] args) {
         String text = "{\"l1\":{\"l1_1\":[\"l1_1_1\",\"l1_1_2\"],\"l1_2\":{\"l1_2_1\":121}},\"l2\":{\"l2_1\":null,\"l2_2\":true,\"l2_3\":{}}}";
         String text1 = "[{\"l1\":{\"l1_1\":[\"l1_1_1\",\"l1_1_2\"],\"l1_2\":{\"l1_2_1\":121}},\"l2\":{\"l2_1\":null,\"l2_2\":true,\"l2_3\":{}}},{\"l1\":{\"l1_1\":[\"l1_1_1\",\"l1_1_2\"],\"l1_2\":{\"l1_2_1\":121}},\"l2\":{\"l2_1\":null,\"l2_2\":true,\"l2_3\":{},\"111\":222}}]";
+        String text2 = "{\"taskId\":\"51a1a71f831c4c0a8401cf409ea1f77b\",\"status\":2,\"result\":{\"series\":[\"2020/08/01 00:00:00\",\"2020/08/02 00:00:00\",\"2020/08/03 00:00:00\",\"2020/08/04 00:00:00\",\"2020/08/05 00:00:00\",\"2020/08/06 00:00:00\",\"2020/08/07 00:00:00\"],\"measures\":[\"event.$startup.TRIGGER_USER_COUNT\"],\"byFields\":[],\"rows\":[{\"sum\":[1384],\"values\":[[227,264,237,238,241,215,236]],\"byValue\":[]}],\"numRows\":1,\"reportUpdateTime\":\"2020-11-10 15:30:50\",\"truncated\":false},\"queueNo\":null,\"queueIdle\":null}";
 //        String key ="l1_1";
 //        getValue(text,key);
 
         String str = "l1.l1_1";
-        System.out.println(getColumns(text, str, "l1"));
+//        System.out.println(getColumns(text2, "result"));
+//        System.out.println(getValue(text2, "result"));
+//        System.out.println(jsonFilter(JSONObject.parse(text), "l1_1"));
+        System.out.println(getValue(text2, "series"));
     }
+
 }

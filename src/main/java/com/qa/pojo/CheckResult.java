@@ -1,5 +1,7 @@
 package com.qa.pojo;
 
+import lombok.Data;
+
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import java.util.Map;
  * @desc
  * @email
  */
+@Data
 public class CheckResult {
 
     /**
@@ -28,40 +31,7 @@ public class CheckResult {
      */
     private String result;
 
-    public CheckResult(String no, List<Map<String, String>> actualResultList, String result) {
-        super();
-        this.no = no;
-        this.actualResultList = actualResultList;
-        this.result = result;
-    }
+    public CheckResult(String no,List<Map<String, String>> actualResultList,String result){
 
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
-    }
-
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public List<Map<String, String>> getActualResultList() {
-        return actualResultList;
-    }
-
-    public void setActualResultList(List<Map<String, String>> actualResultList) {
-        this.actualResultList = actualResultList;
-    }
-
-    @Override
-    public String toString() {
-        return "CheckResult [no=" + no + ", actualResultList=" + actualResultList + ", result=" + result + "]";
     }
 }
